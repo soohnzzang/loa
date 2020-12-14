@@ -1,15 +1,17 @@
 from loa.unit import Unit
 from loa.team import Team
 from loa.team import TeamExaminer
-from loa.simulator import EvasionSimulator
+from loa.judge import EachTurnMaxSurvivalJudge
+from loa.simulator import BasicSimulator
 from loa.logging import use_logging, finish_logging
+
 
 class MyUnit1(Unit):
     
-    HP = 9  # Hit Points (health points)    
-    ATT = 6  # Attack
-    ARM = 5  # Armor
-    EVS = 10 # Evasion
+    HP = 20  # Hit Points (health points)    
+    ATT = 14 # Attack
+    ARM = 8  # Armor
+    EVS = 0  # Evasion
         
     def __init__(self, team, name, pos):
         cls = __class__
@@ -23,10 +25,10 @@ class MyUnit1(Unit):
 
 class MyUnit2(Unit):
     
-    HP = 9  # Hit Points (health points)    
-    ATT = 7  # Attack
-    ARM = 4  # Armor
-    EVS = 8  # Evasion
+    HP = 21  # Hit Points (health points)    
+    ATT = 14  # Attack
+    ARM = 10 # Armor
+    EVS = 0  # Evasion
         
     def __init__(self, team, name, pos):
         cls = __class__
@@ -70,28 +72,23 @@ if __name__ == "__main__":
    
     use_logging("test",                
                 stdout=False,
-                fout=False,
+                fout=True,
                 fpath="test.log",
                 mode='w')
     
-    simulator = EvasionSimulator()
+    simulator = BasicSimulator()
     team1 = MyTeam1("Team#1")
     team2 = MyTeam2("Team#2")
     print(team1)
     print()
     print(team2)
-    
-    # Observe how the positions of team2 changes
-    for i in range(5):
-        team2.arrange(team1)
-        print(team2)
-    
-    
+  
     examiner = TeamExaminer()
-    examiner.check(team1, "ROUND-01")
-    examiner.check(team2, "ROUND-01")    
+    examiner.check(team1, "ROUND-02")
+    examiner.check(team2, "ROUND-02")    
 
-    n_team1, n_team2, n_draws = simulator.play(team1, team2, 20, 10)
+    judge = EachTurnMaxSurvivalJudge()
+    n_team1, n_team2, n_draws = simulator.play(team1, team2, 20, 10, judge)
     print("Number of Team1 wins:", n_team1)
     print("Number of Team2 wins:", n_team2)
     print("Number of draws:", n_draws)

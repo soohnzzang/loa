@@ -1,7 +1,7 @@
 from loa.unit import Unit
 from loa.team import Team
 from loa.team import TeamExaminer
-from loa.simulator import Simulator
+from loa.simulator import EvasionSimulator
 from loa.logging import use_logging, finish_logging
 
 class MyUnit1(Unit):
@@ -61,10 +61,11 @@ if __name__ == "__main__":
    
     use_logging("test",                
                 stdout=False,
-                fout=True,
+                fout=False,
                 fpath="test.log",
                 mode='w')
-    simulator = Simulator()
+    
+    simulator = EvasionSimulator()
     team1 = MyTeam1("Team#1")
     team2 = MyTeam2("Team#2")
     

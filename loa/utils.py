@@ -1,12 +1,21 @@
 import os
+from os.path import join as pjoin
 from loa.logging import write_log
 
+import yaml
+
 def get_current_round():
-    return "ROUND-01"
+    return "ROUND-02"
 
 def get_package_path():                
     return os.path.abspath(os.path.dirname(__file__))
 
+def load_constraint(fname: str = "constraints.yml"):
+    dpath_constraint = pjoin(get_package_path(), "constraints")
+    fpath_constraint = pjoin(dpath_constraint, fname)
+                
+    with open(fpath_constraint, "rt") as fin:
+        return yaml.safe_load(fin.read())        
 
 def check_nonnegative_int(varname, val):
     if not isinstance(val, int):
@@ -30,7 +39,7 @@ def check_nonnegative_float(varname, val):
         write_log(err_msg)
         raise ValueError(err_msg)
 
-def check_type(varname, obj, wtype):
+def check_type(varname, obj, wtype, allow_none=False):
     """Check object for a wanted type.
 
     Parameters
@@ -51,6 +60,9 @@ def check_type(varname, obj, wtype):
     None.
 
     """
+    if allow_none and obj is None:
+        return
+    
     if not isinstance(obj, wtype):
         err_msg = "%s should be %s type, not %s"%(varname, wtype, type(obj))
         write_log(err_msg)

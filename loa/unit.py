@@ -132,7 +132,7 @@ class Unit:
     def attack(self, target: Unit):        
         utils.check_type("target", target, Unit)
         write_log(
-            "Before attack, %s.%s.HP=%.2f, %s.%s.HP=%.2f"%
+            "Before attack, %s.%s.hp=%.2f, %s.%s.hp=%.2f"%
             (
                 self.team.name,
                 self.name,
@@ -151,7 +151,7 @@ class Unit:
                                          target.team.name,
                                          target.name))
         write_log(
-            "After attack, %s.%s.HP=%.2f, %s.%s.HP=%.2f"%
+            "After attack, %s.%s.hp=%.2f, %s.%s.hp=%.2f"%
             (
                 self.team.name,
                 self.name,

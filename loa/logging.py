@@ -68,3 +68,4 @@ def finish_logging():
     for handler in _handlers:        
         handler.close()
         logger.removeHandler(handler)
+        
